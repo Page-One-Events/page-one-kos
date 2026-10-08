@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <title>Franklin Kos Trip!</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <img src="/logo.svg" alt="" class="brand-mark">
+        <span class="brand-name">Page One</span>
+      </div>
+      <div class="sync" id="sync" data-state="loading">
+        <span class="sync-dot"></span><span class="sync-text">Loading…</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Holiday packing</p>
+      <h1 class="trip-title">Franklin Kos Trip!</h1>
+      <div class="overall">
+        <div class="overall-stats">
+          <span><strong id="overall-purchased">0/0</strong> purchased</span>
+          <span><strong id="overall-packed">0/0</strong> packed</span>
+        </div>
+        <div class="bar bar-lg"><i id="overall-bar"></i></div>
+      </div>
+    </section>
+
+    <nav class="toolbar" aria-label="People and filters">
+      <div class="wrap toolbar-inner">
+        <div class="chips" id="people-nav"></div>
+        <div class="filters">
+          <label class="filter">
+            <span>Jobs for</span>
+            <select id="filter-person"><option value="">Everyone</option></select>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="filter-hide-packed">
+            <span class="switch-track"></span>
+            <span>Hide packed</span>
+          </label>
+        </div>
+      </div>
+    </nav>
+
+    <div class="wrap" id="people"></div>
+  </main>
+
+  <footer class="footer wrap">
+    <span>Page One Events</span>
+    <span class="dot-sep">·</span>
+    <span id="version">v1.0.0</span>
+    <span class="dot-sep">·</span>
+    <a href="/logout">Log out</a>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <template id="tpl-person">
+    <section class="person">
+      <h2 class="person-name"></h2>
+      <div class="cases"></div>
+    </section>
+  </template>
+
+  <template id="tpl-case">
+    <article class="case">
+      <header class="case-head">
+        <div class="case-title">
+          <span class="case-owner"></span>
+          <h3 class="case-label"></h3>
+        </div>
+        <div class="case-stats">
+          <span class="stat-purchased"></span>
+          <span class="stat-packed"></span>
+        </div>
+        <div class="bar"><i></i></div>
+      </header>
+      <ul class="items"></ul>
+      <p class="empty"></p>
+      <form class="add" autocomplete="off">
+        <input class="add-name" type="text" placeholder="Add an item…" maxlength="200" aria-label="New item">
+        <select class="add-assignee" aria-label="Assigned to"></select>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </article>
+  </template>
+
+  <template id="tpl-item">
+    <li class="item">
+      <input class="item-name" type="text" maxlength="200" aria-label="Item">
+      <select class="item-assignee" aria-label="Assigned to"></select>
+      <label class="tick tick-purchased">
+        <input type="checkbox"><span class="tick-box" aria-hidden="true"></span><span class="tick-label">Purchased</span>
+      </label>
+      <label class="tick tick-packed">
+        <input type="checkbox"><span class="tick-box" aria-hidden="true"></span><span class="tick-label">Packed</span>
+      </label>
+      <textarea class="item-notes" rows="1" placeholder="Notes" aria-label="Notes" maxlength="4000"></textarea>
+      <button type="button" class="item-del" aria-label="Delete item" title="Delete item">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </li>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 60" role="img" aria-label="Page One Events">
+  <!-- Placeholder Page One mark: page outline with a yellow folded corner.
+       Replace this file with the real logo artwork (keep the name logo.svg). -->
+  <path d="M4 4 H32 L44 16 V56 H4 Z" fill="none" stroke="#8C8C8C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M32 4 V16 H44 Z" fill="#F6C500" stroke="#F6C500" stroke-width="3" stroke-linejoin="round"/>
+</svg>

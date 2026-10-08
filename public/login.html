@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <title>Franklin Kos Trip!</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="login-page">
+  <main class="login">
+    <div class="brand">
+      <img src="/logo.svg" alt="" class="brand-mark">
+      <span class="brand-name">Page One</span>
+    </div>
+    <p class="eyebrow">Holiday packing</p>
+    <h1 class="trip-title">Franklin Kos Trip!</h1>
+
+    <form method="post" action="/login" class="login-form">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+      <p class="login-error" id="error" hidden>That's not the right password.</p>
+      <button type="submit" class="btn btn-primary">Let me in</button>
+    </form>
+  </main>
+  <script>
+    if (new URLSearchParams(location.search).has('e')) document.getElementById('error').hidden = false;
+  </script>
+</body>
+</html>

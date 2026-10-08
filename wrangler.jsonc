@@ -28,12 +28,6 @@
 			"database_name": "franklin-kos-trip",
 			// Filled in automatically by `npm run setup`
 			"database_id": "8b52f71b-0bd8-407a-b4ff-4c617e78c130"
-		},
-		{
-			"binding": "franklin_kos_trip",
-			"database_name": "franklin-kos-trip",
-			"database_id": "8b52f71b-0bd8-407a-b4ff-4c617e78c130",
-			"remote": true
 		}
 	]
 }

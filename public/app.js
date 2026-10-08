@@ -3,7 +3,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.1.0';
+  const VERSION = '1.1.1';
   const POLL_MS = 4000;
   const NOTES_DEBOUNCE_MS = 700;
 

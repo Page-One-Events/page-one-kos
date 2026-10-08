@@ -87,7 +87,10 @@ const dbId = db.uuid || db.id || db.database_id;
 console.log(`Database id: ${dbId}`);
 
 const config = fs.readFileSync(CONFIG, 'utf8');
-const updated = config.replace(/("database_id"\s*:\s*")[^"]*(")/, `$1${dbId}$2`);
+const updated = config
+  // `wrangler d1 create` may append its own extra binding for the new database — drop it, we use DB
+  .replace(/,\s*\{\s*"binding":\s*"(?!DB")[^"]*"[^{}]*"database_name":\s*"franklin-kos-trip"[^{}]*\}/g, '')
+  .replace(/("database_id"\s*:\s*")[^"]*(")/, `$1${dbId}$2`);
 if (updated !== config) {
   fs.writeFileSync(CONFIG, updated);
   // Commit the id so Cloudflare's GitHub builds deploy against the real database

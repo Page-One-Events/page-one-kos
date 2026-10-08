@@ -3,6 +3,11 @@
 All notable changes to Franklin Kos Trip! are listed here.
 Versions follow semantic versioning (MAJOR.MINOR.PATCH). The current version is shown in the site footer.
 
+## 1.1.1 — 2026-10-08
+
+- Removed a duplicate database binding that `wrangler d1 create` added to `wrangler.jsonc` during setup.
+- `npm run setup` now strips that extra binding automatically if it appears.
+
 ## 1.1.0 — 2026-10-08
 
 - Code now lives in GitHub (Page-One-Events/page-one-kos) and deploys through Cloudflare's GitHub integration: every push to `main` goes live automatically.

@@ -1,4 +1,4 @@
-# Franklin Kos Trip! — v1.1.0
+# Franklin Kos Trip! — v1.1.1
 
 Family packing planner at **https://holiday.page-one.events**, with Page One branding and a password.
 

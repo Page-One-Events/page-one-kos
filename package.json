@@ -1,12 +1,13 @@
 {
   "name": "franklin-kos-trip",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Franklin Kos Trip! — holiday packing planner at holiday.page-one.events",
   "scripts": {
     "setup": "node scripts/setup.mjs",
     "deploy": "wrangler deploy",
     "db:local": "wrangler d1 execute franklin-kos-trip --local --file=schema.sql",
-    "dev": "npm run db:local && wrangler dev"
+    "dev": "npm run db:local && wrangler dev",
+    "db:remote": "wrangler d1 execute franklin-kos-trip --remote --file=schema.sql"
   },
   "devDependencies": {
     "wrangler": "^4.148.0"

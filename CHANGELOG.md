@@ -3,6 +3,12 @@
 All notable changes to Franklin Kos Trip! are listed here.
 Versions follow semantic versioning (MAJOR.MINOR.PATCH). The current version is shown in the site footer.
 
+## 1.1.0 — 2026-10-08
+
+- Code now lives in GitHub (Page-One-Events/page-one-kos) and deploys through Cloudflare's GitHub integration: every push to `main` goes live automatically.
+- `npm run setup` is now a one-time bootstrap. It creates the database, commits its id to the repo, does the first deploy and sets the password.
+- Added `npm run db:remote` to apply schema changes to the live database.
+
 ## 1.0.0 — 2026-10-08
 
 First release.

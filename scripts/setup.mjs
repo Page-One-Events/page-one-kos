@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// One-shot setup & deploy for Franklin Kos Trip!
+// One-time bootstrap for Franklin Kos Trip!
 //   npm run setup
-// Safe to run again for every new release: it reuses the existing database,
-// re-applies the (idempotent) schema, deploys, and refreshes the password secret.
+// Creates the D1 database (and commits its id), applies the schema, does the first
+// deploy and sets the password. After that, pushes to main deploy via Cloudflare's
+// GitHub integration. Safe to re-run: it reuses everything that already exists.
 
 import { execSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -87,7 +88,17 @@ console.log(`Database id: ${dbId}`);
 
 const config = fs.readFileSync(CONFIG, 'utf8');
 const updated = config.replace(/("database_id"\s*:\s*")[^"]*(")/, `$1${dbId}$2`);
-if (updated !== config) fs.writeFileSync(CONFIG, updated);
+if (updated !== config) {
+  fs.writeFileSync(CONFIG, updated);
+  // Commit the id so Cloudflare's GitHub builds deploy against the real database
+  step('Committing the database id to GitHub');
+  const git = (args) => spawnSync('git', args, { stdio: 'inherit' }).status === 0;
+  const ok =
+    git(['add', CONFIG]) &&
+    git(['commit', '-m', 'Set D1 database id', '--', CONFIG]) &&
+    git(['push']);
+  if (!ok) console.warn(`Couldn't commit/push automatically — commit ${CONFIG} and push it yourself.`);
+}
 
 // 4. Schema (idempotent)
 step('Applying database schema');
@@ -108,4 +119,7 @@ if (!password) {
 run(['secret', 'put', 'PASSWORD'], { input: `${password}\n` });
 
 console.log('\n\x1b[1m✓ Done — https://holiday.page-one.events\x1b[0m');
-console.log('  (A brand-new custom domain can take a minute or two to start answering.)\n');
+console.log('  (A brand-new custom domain can take a minute or two to start answering.)');
+console.log('\n  Last step, once only: connect the GitHub repo so every push to main deploys.');
+console.log('  Cloudflare dashboard → Workers & Pages → franklin-kos-trip → Settings → Builds → Connect');
+console.log('  → Page-One-Events/page-one-kos, branch main (defaults are fine).\n');

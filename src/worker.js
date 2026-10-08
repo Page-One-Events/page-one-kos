@@ -1,7 +1,7 @@
 // Franklin Kos Trip! — Worker
 // Password gate + JSON API over D1 + serves the static front end from /public.
 
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 const COOKIE = 'fkt_auth';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 120; // 120 days — log in once per device
 const PUBLIC_ASSETS = new Set(['/login.html', '/styles.css', '/logo.svg', '/favicon.svg']);

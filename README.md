@@ -1,4 +1,4 @@
-# Franklin Kos Trip! — v1.0.0
+# Franklin Kos Trip! — v1.1.0
 
 Family packing planner at **https://holiday.page-one.events**, with Page One branding and a password.
 
@@ -8,38 +8,45 @@ Family packing planner at **https://holiday.page-one.events**, with Page One bra
 - Use **Jobs for** to see just one person's jobs, and **Hide packed** to show only what's left.
 - To add several items at once, paste a list (one item per line) into "Add an item…".
 
-## Deploy (first time and every update)
+## How deploys work
+
+Push to `main`, and Cloudflare builds and deploys it, usually within a minute. That's all there is to it after the one-time setup below.
+
+## One-time setup
 
 You need Node.js 18+ and the Cloudflare account that holds page-one.events.
 
-```bash
-npm run setup
-```
+1. **Clone and add the password file.** `.dev.vars` is git-ignored, so it never reaches GitHub.
 
-That single command will:
+   ```bash
+   git clone https://github.com/Page-One-Events/page-one-kos.git
+   cd page-one-kos
+   echo 'PASSWORD="your-password-here"' > .dev.vars
+   ```
 
-1. Install dependencies.
-2. Log you in to Cloudflare (it opens a browser the first time).
-3. Create the `franklin-kos-trip` D1 database and write its id into `wrangler.jsonc`.
-4. Apply `schema.sql`, which creates the tables and the five people and nine cases.
-5. Deploy the Worker on the custom domain `holiday.page-one.events`. Cloudflare adds the DNS record automatically.
-6. Set the site password from `.dev.vars`.
+2. **Bootstrap:**
 
-It's safe to run again for each new release. The schema only adds what's missing, so it never touches existing items.
+   ```bash
+   npm run setup
+   ```
 
-## Change the password
+   This logs you in to Cloudflare. It then creates the `franklin-kos-trip` D1 database and commits and pushes its ID in `wrangler.jsonc`. Next it applies `schema.sql`, which creates the people and cases. It does the first deploy on `holiday.page-one.events` (Cloudflare adds the DNS record) and sets the password secret.
 
-Edit `PASSWORD` in `.dev.vars`, then run `npm run setup` again. Alternatively, run `npx wrangler secret put PASSWORD` on its own.
+3. **Connect GitHub.** In the Cloudflare dashboard, go to **Workers & Pages → franklin-kos-trip → Settings → Builds → Connect**. Choose `Page-One-Events/page-one-kos`, branch `main`, and keep the default build settings (deploy command `npx wrangler deploy`).
+   - If the repo isn't listed, give the Cloudflare GitHub app access to it under GitHub → Page-One-Events → Settings → GitHub Apps.
 
-Changing the password logs every device out.
+The password is a Cloudflare secret, so it stays in place across every deploy.
 
-## Run it locally
+## Day to day
 
-```bash
-npm run dev       # http://localhost:8787 (password from .dev.vars)
-```
+| Task | How |
+|---|---|
+| Release an update | Commit and push to `main` |
+| Change the database schema | Edit `schema.sql`, push, then `npm run db:remote` |
+| Change the password | `npx wrangler secret put PASSWORD` (logs every device out) |
+| Run locally | `npm run dev`, then open http://localhost:8787 (password from `.dev.vars`) |
 
-Local data is kept in `.wrangler/` and is separate from the live site.
+`schema.sql` only adds what's missing, so re-running it never touches existing items. Local data lives in `.wrangler/` and is separate from the live site.
 
 ## Customising
 
@@ -47,7 +54,7 @@ Local data is kept in `.wrangler/` and is separate from the live site.
 |---|---|
 | Real Page One logo | Replace `public/logo.svg` and keep the same filename. The current one is a placeholder mark. |
 | Title | `public/index.html` and `public/login.html` |
-| People and cases | `schema.sql`. Add rows and re-run setup. Removing people or cases needs a manual delete in D1. |
+| People and cases | `schema.sql`. Add rows, then run `npm run db:remote`. Removing people or cases needs a manual delete in D1. |
 | Colours and fonts | Tokens at the top of `public/styles.css` |
 
 Fonts: Gill Sans Nova is used if the device has it, then system Gill Sans (Mac and iPhone have it built in). Other devices fall back to Cabin from Google Fonts.
@@ -60,4 +67,6 @@ Fonts: Gill Sans Nova is used if the device has it, then system Gill Sans (Mac a
 
 ## Versioning
 
-The current version is shown in the footer. See `CHANGELOG.md`. When you release a new version, bump it in `package.json`, `src/worker.js` (`VERSION`), `public/app.js` (`VERSION`) and the changelog.
+Semantic versioning. The current version is shown in the footer, and each release is tagged `vX.Y.Z`. See `CHANGELOG.md`.
+
+To release, bump the version in `package.json`, `src/worker.js` (`VERSION`), `public/app.js` (`VERSION`), `public/index.html` (footer) and the changelog.
